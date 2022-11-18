@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <script>
+        var uuid = function(e) {
+                return e ? (e ^ 16 * Math.random() >> e / 4).toString(16) : ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, uuid)
+            },
+            readCookie = function(e) {
+                var o = document.cookie.match("(^|;)\\s*" + e + "\\s*=\\s*([^;]+)");
+                return o ? o.pop() : null
+            },
+            crossSiteId = readCookie("cohsn_xs_id"),
+            firstPartyXS = window.location.search.substring(1).split("=");
+        (firstPartyXS[0] = "xsid") && (firstPartyXS = firstPartyXS[1]);
+        var secure = "https:" === window.location.protocol ? "; Secure" : "",
+            expires = new Date((new Date).getTime() + 63072e6).toGMTString();
+        null === crossSiteId ? (document.cookie = "cohsn_xs_id=" + uuid() + "; path=/; domain=.cohesionapps.com; expires=" + expires + "; SameSite=None; " + secure, document.location = "xs2.html") : (document.cookie = "cohsn_xs_id=" + crossSiteId + "; path=/; domain=.cohesionapps.com; expires=" + expires + "; SameSite=None; " + secure, firstPartyXS || (document.location = "xs2.html"))
+    </script>
+</body>
+
+</html>
